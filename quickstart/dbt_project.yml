@@ -16,8 +16,6 @@ profile: 'default'
 models:
   jaffle_shop:
     +materialized: table
-    example:
-      +materialized: view
       
 model-paths: ["models"]
 analysis-paths: ["analyses"]
