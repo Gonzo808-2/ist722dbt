@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: fact_movie_rentals
+    description: "Fact table for movie rental transactions."
+    columns:
+      - name: rental_id
+        description: "Primary key for fact_movie_rentals."
+        tests:
+          - not_null
+          - unique
+
+  - name: fact_revenue
+    description: "Fact table for account billing revenue."
+    columns:
+      - name: billing_id
+        description: "Primary key for fact_revenue."
+        tests:
+          - not_null
+          - unique

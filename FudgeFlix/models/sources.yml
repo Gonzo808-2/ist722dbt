@@ -1,13 +1,74 @@
 version: 2
-sources:
-    - name: conformed
-    database: RAW
-    schema: conformed
 
+sources:
+  - name: fudgeflix_v3
+    database: FUDGEFLIX_V3
+    schema: PUBLIC
     tables:
-        -name: DateDimension
-        columns:
-          - name: DateKey
-          tests:
-            - unique
-            
+      - name: ff_accounts
+        description: "Customer account information, including contact details, ZIP codes, and subscription plans."
+        tests:
+          - not_null: account_id
+          - unique: account_id
+
+      - name: ff_titles
+        description: "Information about movie titles, including name, type, rating, availability, and release year."
+        tests:
+          - not_null: title_id
+          - unique: title_id
+
+      - name: ff_account_titles
+        description: "Tracks the relationship between accounts and rented movie titles, including rental and return dates."
+        tests:
+          - not_null: at_id
+          - unique: at_id
+          - relationships:
+              to: {source: fudgeflix_v3, table: ff_accounts, field: account_id}
+
+      - name: ff_account_billing
+        description: "Billing details for accounts, including billed amount, billing date, and plan ID."
+        tests:
+          - not_null: ab_id
+          - unique: ab_id
+
+      - name: ff_plans
+        description: "Subscription plans available, including pricing and current status."
+        tests:
+          - not_null: plan_id
+          - unique: plan_id
+
+      - name: ff_zipcodes
+        description: "Geographic data including ZIP codes, cities, and states."
+        tests:
+          - not_null: zip_code
+          - unique: zip_code
+
+      - name: ff_genres
+        description: "List of unique movie genres."
+        tests:
+          - not_null: genre_name
+          - unique: genre_name
+
+      - name: ff_title_genres
+        description: "Links titles to their respective genres."
+        tests:
+          - not_null: tg_title_id
+          - unique: tg_title_id
+
+      - name: ff_people
+        description: "List of individuals, including cast members and directors."
+        tests:
+          - not_null: people_id
+          - unique: people_id
+
+      - name: ff_cast
+        description: "Tracks relationships between people (cast) and movie titles."
+        tests:
+          - not_null: cast_people_id
+          - unique: cast_people_id
+
+      - name: ff_directors
+        description: "Links directors to movie titles."
+        tests:
+          - not_null: director_people_id
+          - unique: director_people_id
